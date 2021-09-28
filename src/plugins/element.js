@@ -21,13 +21,17 @@ import {
     TableColumn,
     Avatar,
     Input,
-    Tag
+    Tag,
+    Tabs,
+    TabPane
 
 
 } from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Tag)
+Vue.use(Tabs)
+Vue.use(TabPane)
 Vue.use(Input)
 Vue.use(Avatar)
 Vue.use(Breadcrumb)

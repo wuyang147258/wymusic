@@ -14,8 +14,37 @@
       <div class="cleardiv"></div>
        <el-tag  class="tag-type" :class="{active:currtIndexSinger==item.id}" v-for="(item) in songerList" :key="item.id" @click="chooseSinger(item.id)">{{item.name}}</el-tag>
     </div>
+   
     <!-- 歌曲 -->
-    <div v-show="singHotList.length>0"><Song :songListInfo="singHotList"></Song></div>
+    <div v-show="singHotList.length>0">
+       <!-- 歌手信息 -->
+    <div class="singInfo">
+      <div class="img-left"><img :src="singCover" alt=""></div>
+      <div class="introduce-right">
+        <ul>
+          <li><h3 class="singName">{{singName}}</h3></li>
+          <li v-show="singImg!==''"><img class="ruzhuImg"  :src="singImg" >&nbsp;&nbsp;<span class="other">入驻歌手</span></li>
+          <li  v-show="singerBir!==''"> <span>出生日期：{{singerBir|dateFormat}}</span></li>
+          <li><p><span class="Desc">{{singerDesc}}</span></p></li>
+        </ul>
+      </div>
+    </div>  
+    <div class="clearItem"></div>
+      <div class="item">
+        <el-tabs type="border-card">
+    <el-tab-pane label="歌曲"><Song :songListInfo="singHotList"></Song></el-tab-pane>
+    <el-tab-pane label="mv">
+      <div class="mv">
+ <div class="mvimg" v-for="item in singerMv" :key="item.id" @click="openMv"><span>{{item.name}}</span> <img  :src="item.imgurl" class="mvimg" alt=""></div>
+      <div class="clearItem"></div>
+      </div>
+    
+    </el-tab-pane>
+    
+    </el-tabs>
+      </div>
+    </div>
+   
     <div class="liubai"></div>
    </div>
 </template>
@@ -37,7 +66,14 @@ export default {
       currtIndexArea:99,
       currtIndexSinger:'',
       //歌手热门50首歌曲
-      singHotList:[]
+      singHotList:[],
+      singerinfo:[],
+      singCover:'',
+      singName:'',
+      singImg:'',
+      singerBir:'',
+      singerDesc:'',
+      singerMv:[]
     }
    },
   methods:{
@@ -69,9 +105,33 @@ export default {
  async chooseSinger(id){
     this.currtIndexSinger=id
     const {data:res}=await this.$http.get(`/artist/top/song?id=${id}`)
- 
     this.singHotList=res.songs
+    //获取歌手信息
+    const {data:info}=await this.$http.get(`/artist/detail?id=${id}`)
+    this.singerinfo=info.data
+     console.log(this.singerinfo);
+    this.singCover=this.singerinfo.artist.cover
+    this.singName=this.singerinfo.artist.name
+    this.singerDesc=this.singerinfo.artist.briefDesc
+    if('identify' in info.data){
+       this.singImg=this.singerinfo.identify.imageUrl
+    }else{
+       this.singImg=''
+    }
+   if('user' in info.data){
+     console.log(1);
+      this.singerBir=this.singerinfo.user.birthday
+      console.log(this.singerBir);
+    }else{
+       this.singerBir=''
+    }
+    //获取歌手mv
+    const {data:mv}=await this.$http.get(`/artist/mv?id=${id}`)
+    this.singerMv=mv.mvs
+    console.log(mv.mvs);
   },
+
+  
   clearchoose(){
     this.queryType=''
     this.queryArea=''
@@ -117,5 +177,80 @@ h3{
 .liubai{
   clear: both;
   height: 100px;
+}
+.img-left img{
+  width: 360px;
+  height: 320px;
+  border-radius: 20px;
+  float: left;
+}
+ul{
+  margin-top: 20px;
+}
+ul li{
+  height: 40px;
+  list-style: none;
+}
+.introduce-right{
+  float: left;
+  margin-left: 30px;
+}
+.ruzhuImg{
+  width: 23px;
+  height: 23px;
+  vertical-align: middle;
+}
+.singName{
+  font-size: 28px;
+}
+.other{
+  font-size: 10px;
+}
+ul li span{
+  font-size: 15px;
+ font-weight: bold;
+}
+.Desc{
+  width: 380px;
+  overflow: hidden;
+	 text-overflow: ellipsis;
+	 display: -webkit-box;
+	 -webkit-line-clamp: 6;/*想省略几行就写几*/
+	 -webkit-box-orient: vertical;
+
+}
+.singInfo{
+  margin-bottom: 20px;
+}
+.clearItem{
+  clear: both;
+  height: 30px;
+}
+.mv{
+  margin-left: 60px;
+}
+.mvimg{
+
+  float: left;
+  width: 200px;
+  height: 200px;
+  margin-right: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+}
+.mvimg span{
+ 
+  display: inline-block;
+
+  margin-bottom: -20px;
+  width: 160px;
+  height: 30px;
+  line-height: 30px;
+   white-space: nowrap; 
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  font-weight: bold;
+
 }
 </style>
