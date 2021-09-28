@@ -22,16 +22,26 @@ import {
     Avatar,
     Input,
     Tag,
+<<<<<<< HEAD
     Carousel,
     CarouselItem
+=======
+    Tabs,
+    TabPane
+>>>>>>> singer
 
 
 } from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Tag)
+<<<<<<< HEAD
 Vue.use(Carousel)
 Vue.use(CarouselItem)
+=======
+Vue.use(Tabs)
+Vue.use(TabPane)
+>>>>>>> singer
 Vue.use(Input)
 Vue.use(Avatar)
 Vue.use(Breadcrumb)
