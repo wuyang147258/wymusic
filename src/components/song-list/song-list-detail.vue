@@ -64,8 +64,10 @@ export default {
          if(res.code!==200){
            this.$message.error('获取歌曲错误')
          }else{
+           console.log(res);
            this.$message.success('成功获取歌曲')
            this.songListDetail=res.playlist.tracks
+           console.log(this.songListDetailInfo);
            this.songListDetailInfo=res.playlist
         
          }
@@ -129,6 +131,9 @@ export default {
   font-size: 15px;
   overflow: hidden;
   text-overflow:ellipsis;
+}
+.theSongListName h2{
+  text-align: left;
 }
 .theSongListBrief{
    overflow: hidden;

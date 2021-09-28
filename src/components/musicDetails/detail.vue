@@ -221,7 +221,7 @@ export default {
         this.$store.commit('INIT_ISLIKE',this.likeBoolean)  
         console.log(this.$store.state.isLike);
         const {data:res}=await this.$http.get(`/like?id=${this.$store.state.nowMusicId}&like=${this.$store.state.isLike}`)
-        
+        console.log(res);
         
       },   
     async getUserList(){

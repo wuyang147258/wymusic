@@ -1,11 +1,13 @@
 <template>
   <div id="songListZhuan-container">
-     <Song :songListInfo="songListDetail"></Song>
+     <!-- <Song :songListInfo="songListDetail"></Song> -->
+     <Detail :id="id"></Detail>
   </div>
 </template>
 
 <script>
-import Song from '../song-list/song.vue'
+// import Song from '../song-list/song.vue'
+import Detail from '../song-list/song-list-detail.vue'
 export default {
     props:{
       id:String
@@ -27,7 +29,8 @@ export default {
      }
     },
     components:{
-      Song  
+      // Song  
+      Detail
     }
 }
 </script>

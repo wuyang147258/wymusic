@@ -16,6 +16,7 @@
       :fit="fits.cover"></el-image>
   </div>
   <div class="clear"></div>
+
 </div>
 <!-- 分页 -->
 <div class="pagination">
@@ -34,6 +35,7 @@
 </template>
 
 <script>
+
 export default {
   
   props:{
@@ -86,7 +88,8 @@ export default {
       }
     
     
-    }
+    },
+    
 }
 </script>
 
