@@ -1,5 +1,6 @@
 module.exports = {
-
+    publicPath: process.env.NODE_ENV === 'production' ?
+        '/wymusic/' : '/',
     chainWebpack: config => {
         //产品发布阶段main入口
         config.when(process.env.NODE_ENV === 'production', config => {
