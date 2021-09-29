@@ -35,7 +35,7 @@
     <el-tab-pane label="歌曲"><Song :songListInfo="singHotList"></Song></el-tab-pane>
     <el-tab-pane label="mv">
       <div class="mv">
- <div class="mvimg" v-for="item in singerMv" :key="item.id" @click="openMv"><span>{{item.name}}</span> <img  :src="item.imgurl" class="mvimg" alt=""></div>
+ <div class="mvimg" v-for="item in singerMv" :key="item.id" @click="openMv(item.id)"><span>{{item.name}}</span> <img  :src="item.imgurl" class="mvimg" alt=""></div>
       <div class="clearItem"></div>
       </div>
     
@@ -109,7 +109,7 @@ export default {
     //获取歌手信息
     const {data:info}=await this.$http.get(`/artist/detail?id=${id}`)
     this.singerinfo=info.data
-     console.log(this.singerinfo);
+    
     this.singCover=this.singerinfo.artist.cover
     this.singName=this.singerinfo.artist.name
     this.singerDesc=this.singerinfo.artist.briefDesc
@@ -119,18 +119,21 @@ export default {
        this.singImg=''
     }
    if('user' in info.data){
-     console.log(1);
+    
       this.singerBir=this.singerinfo.user.birthday
-      console.log(this.singerBir);
+     
     }else{
        this.singerBir=''
     }
     //获取歌手mv
     const {data:mv}=await this.$http.get(`/artist/mv?id=${id}`)
     this.singerMv=mv.mvs
-    console.log(mv.mvs);
+   
   },
+  openMv(id){
 
+   this.$router.push(`/mvPlay/${id}`)
+  },
   
   clearchoose(){
     this.queryType=''

@@ -1,5 +1,6 @@
 <template>
    <div id="detail-container">
+     <el-button class="back" type="danger" round @click="back">back</el-button>
      <div class="item">
       <div class="bg" :style="{ 'background-image' : 'url('+imgurl+')' }"></div>
        <div class="img-left">
@@ -216,6 +217,9 @@ export default {
         }
       }
         },
+          back(){
+         this.$router.go(-1)
+      },
      async likeSongs(){
          this.likeBoolean=!this.likeBoolean
         this.$store.commit('INIT_ISLIKE',this.likeBoolean)  
